@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>العدوي</title> <!-- Browser title -->
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            padding-top: 50px;
+            background-color: #F0F0D7; /* Soft yellowish background */
+            color: #727D73; /* Muted green-gray font */
+            margin: 0;
+            padding: 0;
+        }
+
+        h1 {
+            font-size: 2rem;
+            margin-bottom: 20px;
+        }
+
+        /* Basic styles for the grid and slots */
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            grid-template-rows: repeat(4, 1fr);
+            gap: 10px;
+            justify-content: center;
+            width: 100%;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 10px;
+        }
+
+        .slot {
+            width: 100%;
+            height: 100%;
+            min-height: 100px;
+            border: 2px solid #727D73; /* Muted green-gray border */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-size: 1.5rem;
+            background-color: rgba(255, 255, 255, 0.7);
+            position: relative;
+            transition: transform 0.2s ease-in-out;
+        }
+
+        .slot:hover {
+            transform: scale(1.1);
+        }
+
+        /* Hide content initially */
+        .slot .content {
+            display: none;
+        }
+
+        /* Basic styles for the confirmation popup */
+        .confirmation-popup {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            padding: 20px;
+            background-color: white;
+            border: 2px solid #727D73; /* Muted green-gray border */
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            z-index: 10;
+            color: #727D73; /* Muted green-gray font */
+        }
+
+        .confirmation-popup button {
+            margin: 10px;
+        }
+
+        .overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 5;
+        }
+
+        /* Content box in the middle of the page */
+        .content-box {
+            display: none;
+            margin-top: 20px;
+            padding: 20px;
+            border: 2px solid #727D73; /* Muted green-gray border */
+            width: 80%;
+            max-width: 400px;
+            margin: 20px auto;
+            text-align: center;
+            line-height: 1.5;
+            font-size: 1.2rem;
+            background-color: rgba(255, 255, 255, 0.8);
+        }
+
+        /* Responsiveness */
+        @media (max-width: 768px) {
+            .slot {
+                font-size: 1.2rem; /* Smaller font size for medium screens */
+                min-height: 90px;
+            }
+
+            h1 {
+                font-size: 1.5rem; /* Smaller font size for h1 */
+            }
+        }
+
+        @media (max-width: 480px) {
+            .grid {
+                grid-template-columns: repeat(2, 1fr); /* 2 columns for small screens */
+                width: 90%;
+            }
+
+            .slot {
+                font-size: 1.1rem; /* Even smaller font size for mobile */
+                min-height: 80px;
+            }
+
+            h1 {
+                font-size: 1.2rem; /* Further reduced font size */
+            }
+
+            .content-box {
+                font-size: 1rem; /* Smaller text in content box */
+            }
+        }
+
+        @media (max-width: 320px) {
+            .grid {
+                grid-template-columns: 1fr; /* Single column layout for very small screens */
+            }
+
+            .slot {
+                font-size: 1rem; /* Smallest font size */
+                min-height: 70px;
+            }
+
+            .content-box {
+                font-size: 0.9rem; /* Small text in content box */
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <h1>اختار رقم</h1>
+
+    <div class="grid">
+        <!-- Create 16 slots with hidden content -->
+        <div class="slot" data-slot="1">
+            1
+            <div class="content">نعال</div>
+        </div>
+        <div class="slot" data-slot="2">
+            2
+            <div class="content">ايربود</div>
+        </div>
+        <div class="slot" data-slot="3">
+            3
+            <div class="content">ساعة كلاسيك</div>
+        </div>
+        <div class="slot" data-slot="4">
+            4
+            <div class="content">ساعة الكترونية</div>
+        </div>
+        <div class="slot" data-slot="5">
+            5
+            <div class="content">لبسه</div>
+        </div>
+        <div class="slot" data-slot="6">
+            6
+            <div class="content">قلم</div>
+        </div>
+        <div class="slot" data-slot="7">
+            7
+            <div class="content">تذكرة الى دولة</div>
+        </div>
+        <div class="slot" data-slot="8">
+            8
+            <div class="content">دبي</div>
+        </div>
+        <div class="slot" data-slot="9">
+            9
+            <div class="content">لابتوب</div>
+        </div>
+        <div class="slot" data-slot="10">
+            10
+            <div class="content">عطر</div>
+        </div>
+        <div class="slot" data-slot="11">
+            11
+            <div class="content">مَصر</div>
+        </div>
+        <div class="slot" data-slot="12">
+            12
+            <div class="content">كمة</div>
+        </div>
+        <div class="slot" data-slot="13">
+            13
+            <div class="content">عصا</div>
+        </div>
+        <div class="slot" data-slot="14">
+            14
+            <div class="content">خاتم</div>
+        </div>
+        <div class="slot" data-slot="15">
+            15
+            <div class="content">اختار ثلاث اشياء</div>
+        </div>
+        <div class="slot" data-slot="16">
+            16
+            <div class="content">بخور</div>
+        </div>
+    </div>
+
+    <!-- Confirmation Popup -->
+    <div class="overlay" id="overlay"></div>
+    <div class="confirmation-popup" id="confirmation-popup">
+        <p>متأكد من اختيارك ؟</p>
+        <button id="confirm-btn">نعم</button>
+        <button id="cancel-btn">لا</button>
+    </div>
+
+    <!-- Content Display Box -->
+    <div class="content-box" id="content-box">
+        <p id="selected-content"></p>
+    </div>
+
+    <script>
+        // Get all slot elements and the confirmation popup
+        const slots = document.querySelectorAll('.slot');
+        const confirmationPopup = document.getElementById('confirmation-popup');
+        const overlay = document.getElementById('overlay');
+        const confirmButton = document.getElementById('confirm-btn');
+        const cancelButton = document.getElementById('cancel-btn');
+        const contentBox = document.getElementById('content-box');
+        const selectedContent = document.getElementById('selected-content');
+
+        let selectedSlot = null;
+
+        // Add click event to each slot
+        slots.forEach(slot => {
+            slot.addEventListener('click', () => {
+                // Mark the slot as selected
+                if (selectedSlot) {
+                    selectedSlot.classList.remove('selected');
+                }
+                selectedSlot = slot;
+                selectedSlot.classList.add('selected');
+
+                // Show the confirmation popup
+                confirmationPopup.style.display = 'block';
+                overlay.style.display = 'block';
+            });
+        });
+
+        // Confirm the selection
+        confirmButton.addEventListener('click', () => {
+            // Get the content of the selected slot
+            const slotContent = selectedSlot.querySelector('.content').innerText;
+
+            // Display the content in the middle of the page
+            selectedContent.innerText = ` ${slotContent}`;
+            contentBox.style.display = 'block';
+
+            // Hide the slot number and show the content
+            selectedSlot.querySelector('.content').style.display = 'block';
+            selectedSlot.innerHTML = selectedSlot.querySelector('.content').innerHTML;  // Remove number and show only content
+
+            // Hide the confirmation popup and overlay
+            confirmationPopup.style.display = 'none';
+            overlay.style.display = 'none';
+        });
+
+        // Cancel the selection
+        cancelButton.addEventListener('click', () => {
+            selectedSlot.classList.remove('selected');
+            selectedSlot = null;
+
+            // Hide the confirmation popup and overlay
+            confirmationPopup.style.display = 'none';
+            overlay.style.display = 'none';
+        });
+
+        // Close the popup when clicking outside
+        overlay.addEventListener('click', () => {
+            if (selectedSlot) {
+                selectedSlot.classList.remove('selected');
+            }
+            confirmationPopup.style.display = 'none';
+            overlay.style.display = 'none';
+        });
+    </script>
+
+</body>
+</html>
